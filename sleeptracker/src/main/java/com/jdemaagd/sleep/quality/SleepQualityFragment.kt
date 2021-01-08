@@ -16,10 +16,8 @@ import com.jdemaagd.sleep.database.SleepDatabase
 import com.jdemaagd.sleep.databinding.FragmentSleepQualityBinding
 
 /**
- * Fragment that displays a list of clickable icons,
- * each representing a sleep quality rating.
- * Once the user taps an icon, the quality is set in the current sleepNight
- * and the database is updated.
+ * Fragment that displays a list of clickable icons, each representing a sleep quality rating.
+ * Once user taps an icon, quality is set in current sleepNight and database is updated.
  */
 class SleepQualityFragment : Fragment() {
 
@@ -31,7 +29,6 @@ class SleepQualityFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        // Get a reference to the binding object and inflate the fragment views.
         val binding: FragmentSleepQualityBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_sleep_quality, container, false)
 
@@ -39,7 +36,6 @@ class SleepQualityFragment : Fragment() {
 
         val arguments = SleepQualityFragmentArgs.fromBundle(requireArguments())
 
-        // Create an instance of the ViewModel Factory.
         val dataSource = SleepDatabase.getInstance(application).sleepDatabaseDao
         val viewModelFactory = SleepQualityViewModelFactory(arguments.sleepNightKey, dataSource)
 
