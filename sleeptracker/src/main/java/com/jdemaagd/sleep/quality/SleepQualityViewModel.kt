@@ -9,11 +9,6 @@ import com.jdemaagd.sleep.database.SleepDatabaseDao
 
 import kotlinx.coroutines.launch
 
-/**
- * ViewModel for SleepQualityFragment.
- *
- * @param sleepNightKey The key of the current night we are working on.
- */
 class SleepQualityViewModel(
         private val sleepNightKey: Long = 0L,
         val database: SleepDatabaseDao) : ViewModel() {
