@@ -15,11 +15,6 @@ import com.jdemaagd.sleep.R
 import com.jdemaagd.sleep.database.SleepDatabase
 import com.jdemaagd.sleep.databinding.FragmentSleepTrackerBinding
 
-/**
- * A fragment with buttons to record start and end times for sleep, which are saved in
- * a database. Cumulative data is displayed in a simple scrollable TextView.
- * (Because we have not learned about RecyclerView yet.)
- */
 class SleepTrackerFragment : Fragment() {
 
     /**
@@ -40,8 +35,9 @@ class SleepTrackerFragment : Fragment() {
 
         val viewModelFactory = SleepTrackerViewModelFactory(dataSource, application)
 
-        val sleepTrackerViewModel = ViewModelProvider(
-                this, viewModelFactory).get(SleepTrackerViewModel::class.java)
+        val sleepTrackerViewModel =
+                ViewModelProvider(
+                        this, viewModelFactory).get(SleepTrackerViewModel::class.java)
 
         binding.sleepTrackerViewModel = sleepTrackerViewModel
 
@@ -49,8 +45,8 @@ class SleepTrackerFragment : Fragment() {
 
         // Add an Observer on the state variable for showing a Snackbar message
         // when the CLEAR button is pressed.
-        sleepTrackerViewModel.showSnackBarEvent.observe(viewLifecycleOwner, { state ->
-            if (state == true) { // Observed state is true.
+        sleepTrackerViewModel.showSnackBarEvent.observe(viewLifecycleOwner, {
+            if (it == true) { // Observed state is true.
                 Snackbar.make(
                         requireActivity().findViewById(android.R.id.content),
                         getString(R.string.cleared_message),
@@ -78,6 +74,15 @@ class SleepTrackerFragment : Fragment() {
                 // Reset state to make sure we only navigate once, even if the device
                 // has a configuration change.
                 sleepTrackerViewModel.doneNavigating()
+            }
+        })
+
+        val adapter = SleepNightAdapter()
+        binding.rvSleeps.adapter = adapter
+
+        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, {
+            it?.let {
+                adapter.data = it
             }
         })
 
