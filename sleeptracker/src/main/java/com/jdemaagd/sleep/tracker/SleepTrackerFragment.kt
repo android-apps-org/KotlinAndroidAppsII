@@ -17,15 +17,9 @@ import com.jdemaagd.sleep.databinding.FragmentSleepTrackerBinding
 
 class SleepTrackerFragment : Fragment() {
 
-    /**
-     * Called when the Fragment is ready to display content to the screen.
-     *
-     * This function uses DataBindingUtil to inflate R.layout.fragment_sleep_quality.
-     */
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
-        // Get a reference to the binding object and inflate the fragment views.
         val binding: FragmentSleepTrackerBinding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_sleep_tracker, container, false)
 
@@ -43,17 +37,14 @@ class SleepTrackerFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        // Add an Observer on the state variable for showing a Snackbar message
-        // when the CLEAR button is pressed.
-        sleepTrackerViewModel.showSnackBarEvent.observe(viewLifecycleOwner, {
-            if (it == true) { // Observed state is true.
+        // Observer on state variable for showing Snackbar message when CLEAR button is pressed
+        sleepTrackerViewModel.showSnackBarEvent.observe(viewLifecycleOwner, { clear ->
+            if (clear) {
                 Snackbar.make(
                         requireActivity().findViewById(android.R.id.content),
                         getString(R.string.cleared_message),
                         Snackbar.LENGTH_SHORT // How long to display the message.
                 ).show()
-                // Reset state to make sure the snackbar is only shown once, even if the device
-                // has a configuration change.
                 sleepTrackerViewModel.doneShowingSnackbar()
             }
         })
@@ -70,9 +61,7 @@ class SleepTrackerFragment : Fragment() {
                 // Also: https://stackoverflow.com/questions/28929637/difference-and-uses-of-oncreate-oncreateview-and-onactivitycreated-in-fra
                 this.findNavController().navigate(
                         SleepTrackerFragmentDirections
-                                .actionSleepTrackerFragmentToSleepQualityFragment(night.nightId))
-                // Reset state to make sure we only navigate once, even if the device
-                // has a configuration change.
+                                .actionSleepTrackerFragmentToSleepQualityFragment(night.nightId))  // Note: safeArgs passed when navigating
                 sleepTrackerViewModel.doneNavigating()
             }
         })
@@ -80,9 +69,9 @@ class SleepTrackerFragment : Fragment() {
         val adapter = SleepNightAdapter()
         binding.rvSleeps.adapter = adapter
 
-        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, {
-            it?.let {
-                adapter.data = it
+        sleepTrackerViewModel.nights.observe(viewLifecycleOwner, { nights ->
+            nights?.let { night ->
+                adapter.submitList(night)
             }
         })
 
