@@ -42,13 +42,18 @@ class SleepTrackerViewModel(
     // Internal snackbar event: request a toast by setting this value to true
     private var _showSnackbarEvent = MutableLiveData<Boolean>()
 
+    // Internal navigation event: to tell Fragment to navigate to a specific ` [SleepQualityFragment] `
+    private val _navigateToSleepQuality = MutableLiveData<SleepNight>()
+
+    // Exposed navigation event: to immediately navigate to [SleepQualityFragment]
+    //                           if not null and call [doneNavigating]
+    val navigateToSleepQuality: LiveData<SleepNight>
+        get() = _navigateToSleepQuality
+
     // Exposed snackbar event: immediately `show()` a toast
     //                         if not null and call `doneShowingSnackbar()`
     val showSnackBarEvent: LiveData<Boolean>
         get() = _showSnackbarEvent
-
-    // Internal navigation event: to tell Fragment to navigate to a specific ` [SleepQualityFragment] `
-    private val _navigateToSleepQuality = MutableLiveData<SleepNight>()
 
     // Call immediately after calling `show()` on a toast
     // clear toast request (prevents duplicate toast on device rotation)
@@ -56,27 +61,10 @@ class SleepTrackerViewModel(
         _showSnackbarEvent.value = false
     }
 
-    // Exposed navigation event: to immediately navigate to [SleepQualityFragment]
-    //                           if not null and call [doneNavigating]
-    val navigateToSleepQuality: LiveData<SleepNight>
-        get() = _navigateToSleepQuality
-
     // Call immediately after navigating to ` [SleepQualityFragment] `
     // clear navigation request (prevents navigating again on device rotation)
     fun doneNavigating() {
         _navigateToSleepQuality.value = null
-    }
-
-    private val _navigateToSleepDataQuality = MutableLiveData<Long>()
-    val navigateToSleepDataQuality
-        get() = _navigateToSleepDataQuality
-
-    fun onSleepNightClicked(id: Long) {
-        _navigateToSleepDataQuality.value = id
-    }
-
-    fun onSleepDataQualityNavigated() {
-        _navigateToSleepDataQuality.value = null
     }
 
     // Note: where ViewModel Lifecycle starts (associated to lifecycle-owner: SleepTrackerFragment)
@@ -94,7 +82,7 @@ class SleepTrackerViewModel(
     }
 
     // Note: does not block UI while doing work (database operation)
-    // Note: validate good night
+    //       validate good night
     private suspend fun getTonightFromDatabase(): SleepNight? {
         // Note: ViewModels provide their own scope by default, which can be accessed by ViewModelScope,
         //       do not need another coroutine in IO context ` withContext(Dispatchers.IO) {} `
