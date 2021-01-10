@@ -5,10 +5,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.text.Html
 import android.text.Spanned
-import android.widget.TextView
-
 import androidx.core.text.HtmlCompat
-import androidx.recyclerview.widget.RecyclerView
 
 import com.jdemaagd.sleep.database.SleepNight
 
@@ -38,6 +35,7 @@ private val ONE_HOUR_MILLIS = TimeUnit.MILLISECONDS.convert(1, TimeUnit.HOURS)
 fun convertDurationToFormatted(startTimeMilli: Long, endTimeMilli: Long, res: Resources): String {
     val durationMilli = endTimeMilli - startTimeMilli
     val weekdayString = SimpleDateFormat("EEEE", Locale.getDefault()).format(startTimeMilli)
+
     return when {
         durationMilli < ONE_MINUTE_MILLIS -> {
             val seconds = TimeUnit.SECONDS.convert(durationMilli, TimeUnit.MILLISECONDS)
@@ -59,6 +57,7 @@ fun convertDurationToFormatted(startTimeMilli: Long, endTimeMilli: Long, res: Re
  */
 fun convertNumericQualityToString(quality: Int, resources: Resources): String {
     var qualityString = resources.getString(R.string.three_ok)
+
     when (quality) {
         -1 -> qualityString = "--"
         0 -> qualityString = resources.getString(R.string.zero_very_bad)
@@ -67,6 +66,7 @@ fun convertNumericQualityToString(quality: Int, resources: Resources): String {
         4 -> qualityString = resources.getString(R.string.four_pretty_good)
         5 -> qualityString = resources.getString(R.string.five_excellent)
     }
+
     return qualityString
 }
 
@@ -100,12 +100,14 @@ fun convertLongToDateString(systemTime: Long): String {
  */
 fun formatNights(nights: List<SleepNight>, resources: Resources): Spanned {
     val sb = StringBuilder()
+
     sb.apply {
         append(resources.getString(R.string.title))
         nights.forEach {
             append("<br>")
             append(resources.getString(R.string.start_time))
             append("\t${convertLongToDateString(it.startTimeMilli)}<br>")
+
             if (it.endTimeMilli != it.startTimeMilli) {
                 append(resources.getString(R.string.end_time))
                 append("\t${convertLongToDateString(it.endTimeMilli)}<br>")
