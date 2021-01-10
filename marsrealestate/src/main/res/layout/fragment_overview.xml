@@ -12,7 +12,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="com.example.android.marsrealestate.MainActivity">
+        tools:context="com.jdemaagd.marsrealestate.MainActivity">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

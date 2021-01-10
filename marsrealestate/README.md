@@ -1,6 +1,5 @@
 # Connect to Internet
 
-
 ##  Think About
 
 ```
@@ -19,4 +18,10 @@ Building upon the MVVM model lessons as well as persistence lessons, consider th
 - Think about a banking application:
   - Do you see all transactions for an account?
   - What parameters might be required to paginate transactions?
+
+## Resources
+
+- [Retrofit Library](https://square.github.io/retrofit/)
+- [Retrofit Github](https://github.com/square/retrofit)
+- [Connect to Network](https://developer.android.com/training/basics/network-ops/connecting)
 
