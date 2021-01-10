@@ -39,16 +39,21 @@ class SleepTrackerViewModel(
         nights?.isNotEmpty()
     }
 
-    // Internal snackbar event: request a toast by setting this value to true
-    private var _showSnackbarEvent = MutableLiveData<Boolean>()
-
     // Internal navigation event: to tell Fragment to navigate to a specific ` [SleepQualityFragment] `
     private val _navigateToSleepQuality = MutableLiveData<SleepNight>()
+
+    private val _navigateToSleepDataQuality = MutableLiveData<Long>()
+
+    // Internal snackbar event: request a toast by setting this value to true
+    private var _showSnackbarEvent = MutableLiveData<Boolean>()
 
     // Exposed navigation event: to immediately navigate to [SleepQualityFragment]
     //                           if not null and call [doneNavigating]
     val navigateToSleepQuality: LiveData<SleepNight>
         get() = _navigateToSleepQuality
+
+    val navigateToSleepDataQuality
+        get() = _navigateToSleepDataQuality
 
     // Exposed snackbar event: immediately `show()` a toast
     //                         if not null and call `doneShowingSnackbar()`
@@ -121,6 +126,14 @@ class SleepTrackerViewModel(
         withContext(Dispatchers.IO) {
             database.insert(night)
         }
+    }
+
+    fun onSleepNightClicked(id: Long){
+        _navigateToSleepDataQuality.value = id
+    }
+
+    fun onSleepDataQualityNavigated() {
+        _navigateToSleepDataQuality.value = null
     }
 
     // Note: start night (sleep)

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -68,17 +67,32 @@ class SleepTrackerFragment : Fragment() {
             }
         })
 
+        sleepTrackerViewModel.navigateToSleepDataQuality.observe(viewLifecycleOwner, { nightId ->
+            nightId?.let {
+                this.findNavController().navigate(SleepTrackerFragmentDirections
+                        .actionSleepTrackerFragmentToSleepDetailFragment(nightId))
+                sleepTrackerViewModel.onSleepDataQualityNavigated()
+            }
+        })
+
         val manager = GridLayoutManager(activity, 3)
         binding.rvSleeps.layoutManager = manager
 
+        manager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+            override fun getSpanSize(position: Int) =  when (position) {
+                0 -> 3
+                else -> 1
+            }
+        }
+
         val adapter = SleepNightAdapter(SleepNightListener { nightId ->
-            Toast.makeText(context, "${nightId}", Toast.LENGTH_SHORT).show()
+            sleepTrackerViewModel.onSleepNightClicked(nightId)
         })
         binding.rvSleeps.adapter = adapter
 
         sleepTrackerViewModel.nights.observe(viewLifecycleOwner, { nights ->
-            nights?.let { night ->
-                adapter.submitList(night)   // Note: notify list adapter of available list to run DiffUtil
+            nights?.let { nights ->
+                adapter.addHeaderAndSubmitList(nights)
             }
         })
 
