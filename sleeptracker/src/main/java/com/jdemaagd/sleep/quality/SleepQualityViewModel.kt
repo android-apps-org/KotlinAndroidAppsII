@@ -13,39 +13,32 @@ class SleepQualityViewModel(
         private val sleepNightKey: Long = 0L,
         val database: SleepDatabaseDao) : ViewModel() {
 
-    /**
-     * Variable that tells the fragment whether it should navigate to [SleepTrackerFragment].
-     *
-     * This is `private` because we don't want to expose the ability to set [MutableLiveData] to
-     * the [Fragment]
-     */
+    // Internal navigation event: to tell Fragment to navigate to a specific ` [SleepTrackerFragment] `
     private val _navigateToSleepTracker = MutableLiveData<Boolean?>()
 
-    /**
-     * When true immediately navigate back to the [SleepTrackerFragment]
-     */
+    // Exposed navigation event: to immediately navigate to [SleepTrackerFragment]
+    //                           if not null and call [doneNavigating]
     val navigateToSleepTracker: LiveData<Boolean?>
         get() = _navigateToSleepTracker
 
-    /**
-     * Call this immediately after navigating to [SleepTrackerFragment]
-     */
+    // Call immediately after navigating to ` [SleepTrackerFragment] `
+    // clear navigation request (prevents navigating again on device rotation)
     fun doneNavigating() {
         _navigateToSleepTracker.value = null
     }
 
-    /**
-     * Sets the sleep quality and updates the database.
-     *
-     * Then navigates back to the SleepTrackerFragment.
-     */
+    // Note: set sleep quality via icons
     fun onSetSleepQuality(quality: Int) {
+        // Note: leverage lifecycle-aware coroutine scope ViewModelScope provided by AAC
+        //       launch coroutine that runs on main UI thread (result affects UI)
         viewModelScope.launch {
             val tonight = database.get(sleepNightKey) ?: return@launch
             tonight.sleepQuality = quality
+
+            // Note: database operation (call to suspend function)
             database.update(tonight)
 
-            // Setting this state variable to true will alert the observer and trigger navigation.
+            // Setting this state variable to true will alert the observer and trigger navigation
             _navigateToSleepTracker.value = true
         }
     }
