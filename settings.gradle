@@ -1,3 +1,4 @@
+include ':devbyteviewer'
 include ':marsrealestate'
 include ':sleeptracker'
 rootProject.name = "KotlinAndroidAppsII"

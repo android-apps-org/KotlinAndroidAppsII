@@ -4,6 +4,8 @@
 
 ## Mars Real Estate: Connect to Internet
 
+## DevByteViewer: Offline Caching
+
 ### Capstone Persistence
 
 ```
@@ -32,5 +34,14 @@ but not all are free or well documented and easy to use.
 Start thinking about where data you might need to enable your features to work. 
 Look into various APIs and develop a plan to connect and retrieve that data. 
 Think about queries you might need to build to retrieve that data.
+```
+
+###  Capstone Offline
+
+```
+As you have seen previously, data persistence adds extreme value to almost any application.
+With Room, you can benefit from the power of online data access and flexibility of local persistent storage.
+With the APIs you’ve looked at for your app ideas, what would the entities look like locally?
+Start a plan for developing your API models for storage.
 ```
 
