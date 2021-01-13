@@ -5,9 +5,11 @@ import android.view.*
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 
 import com.jdemaagd.marsrealestate.R
 import com.jdemaagd.marsrealestate.databinding.FragmentOverviewBinding
+import com.jdemaagd.marsrealestate.network.MarsApiFilter
 
 /**
  * This fragment shows the the status of the Mars real-estate web services transaction.
@@ -35,7 +37,26 @@ class OverviewFragment : Fragment() {
         // Giving the binding access to the OverviewViewModel
         binding.viewModel = viewModel
 
+        // Sets the adapter of the photosGrid RecyclerView with clickHandler lambda that
+        // tells the viewModel when our property is clicked
+        binding.rvPhotos.adapter = PhotoGridAdapter(PhotoGridAdapter.OnClickListener {
+            viewModel.displayPropertyDetails(it)
+        })
+
+        // Observe the navigateToSelectedProperty LiveData and Navigate when it isn't null
+        // After navigating, call displayPropertyDetailsComplete() so that the ViewModel is ready
+        // for another navigation event.
+        viewModel.navigateToSelectedProperty.observe(viewLifecycleOwner, { property ->
+            if ( null != property) {
+                // Must find the NavController from the Fragment
+                this.findNavController().navigate(OverviewFragmentDirections.actionShowDetail(property))
+                // Tell the ViewModel we've made the navigate call to prevent multiple navigation
+                viewModel.displayPropertyDetailsComplete()
+            }
+        })
+
         setHasOptionsMenu(true)
+
         return binding.root
     }
 
@@ -45,5 +66,21 @@ class OverviewFragment : Fragment() {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.overflow_menu, menu)
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    /**
+     * Updates the filter in the [OverviewViewModel] when the menu items are selected from the
+     * overflow menu.
+     */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        viewModel.updateFilter(
+            when (item.itemId) {
+                R.id.show_rent_menu -> MarsApiFilter.SHOW_RENT
+                R.id.show_buy_menu -> MarsApiFilter.SHOW_BUY
+                else -> MarsApiFilter.SHOW_ALL
+            }
+        )
+
+        return true
     }
 }
