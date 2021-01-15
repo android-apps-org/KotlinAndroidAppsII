@@ -1,13 +1,9 @@
 package com.jdemaagd.marsrealestate.network
 
 import android.os.Parcelable
-
 import androidx.lifecycle.LiveData
-
 import com.jdemaagd.marsrealestate.overview.MarsApiStatus
-
 import com.squareup.moshi.Json
-
 import kotlinx.android.parcel.Parcelize
 
 /**

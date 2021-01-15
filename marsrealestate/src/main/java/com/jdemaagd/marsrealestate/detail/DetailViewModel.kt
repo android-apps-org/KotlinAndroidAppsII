@@ -27,12 +27,12 @@ class DetailViewModel(marsProperty: MarsProperty, app: Application)
 
     // The displayPropertyPrice formatted Transformation Map LiveData, which displays the sale
     // or rental price.
-    val displayPropertyPrice = Transformations.map(selectedProperty) {
+    val displayPropertyPrice = Transformations.map(selectedProperty) { marsProperty ->
         app.applicationContext.getString(
-            when (it.isRental) {
+            when (marsProperty.isRental) {
                 true -> R.string.display_price_monthly_rental
                 false -> R.string.display_price
-            }, it.price)
+            }, marsProperty.price)
     }
 
     // The displayPropertyType formatted Transformation Map LiveData, which displays the
