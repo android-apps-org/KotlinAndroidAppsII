@@ -91,7 +91,7 @@ class SleepTrackerFragment : Fragment() {
         binding.rvSleeps.adapter = adapter
 
         sleepTrackerViewModel.nights.observe(viewLifecycleOwner, { nights ->
-            nights?.let { nights ->
+            nights?.let {
                 adapter.addHeaderAndSubmitList(nights)
             }
         })

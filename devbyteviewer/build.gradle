@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
     id 'kotlin-kapt'
     id 'androidx.navigation.safeargs'
 }
@@ -49,6 +48,7 @@ dependencies {
     implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
     implementation "androidx.room:room-ktx:$room_version"
     implementation "androidx.room:room-runtime:$room_version"
+    implementation "androidx.work:work-runtime-ktx:$work_version"
 
     implementation "com.github.bumptech.glide:glide:$glide_version"
     implementation "com.jakewharton.timber:timber:$timber_version"
@@ -60,12 +60,9 @@ dependencies {
 
     implementation "joda-time:joda-time:$joda_version"
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutine_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutine_version"
-
-    implementation "android.arch.work:work-runtime-ktx:$work_version"
-
+    
     kapt "androidx.room:room-compiler:$room_version"
 }

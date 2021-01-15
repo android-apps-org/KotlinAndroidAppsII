@@ -174,9 +174,9 @@ class DevByteAdapter(val callback: VideoClick) : RecyclerView.Adapter<DevByteVie
      *   to reflect the item at the given position
      */
     override fun onBindViewHolder(holder: DevByteViewHolder, position: Int) {
-        holder.viewDataBinding.also {
-            it.video = videos[position]
-            it.videoCallback = callback
+        holder.viewDataBinding.also { binding ->
+            binding.video = videos[position]
+            binding.videoCallback = callback
         }
     }
 }
