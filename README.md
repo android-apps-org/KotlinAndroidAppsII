@@ -6,6 +6,9 @@
 
 ## DevByteViewer: Offline Caching
 
+## GDG Finder: Material Design
+
+
 ### Capstone Persistence
 
 ```
@@ -43,5 +46,17 @@ As you have seen previously, data persistence adds extreme value to almost any a
 With Room, you can benefit from the power of online data access and flexibility of local persistent storage.
 With the APIs you’ve looked at for your app ideas, what would the entities look like locally?
 Start a plan for developing your API models for storage.
+```
+
+Capstone Design
+
+```
+Early on, the Android ecosystem suffered from apps with inconsistent UI and usability standards.  
+Apps were generally considered inferior to their iOS counterparts or even versions.  
+Today, a solid UX is a cornerstone of any successful app.  
+Start planning a design strategy for your application.  
+What colors are you going to use? How are you going to space content?  
+Can you put together resources, colors, dimensions, drawables, styles, and themes,  
+  that will produce the desired effect?
 ```
 
