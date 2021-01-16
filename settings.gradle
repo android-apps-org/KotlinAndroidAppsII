@@ -1,3 +1,4 @@
+include ':gdgfinder'
 include ':devbyteviewer'
 include ':marsrealestate'
 include ':sleeptracker'
