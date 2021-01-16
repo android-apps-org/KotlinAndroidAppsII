@@ -20,6 +20,7 @@ buildscript {
         material_design_version = "1.2.1"
         moshi_version = "1.11.0"
         nav_version = "2.3.2"
+        play_services_version = "17.1.0"
         retrofit_version = "2.9.0"
         room_version = "2.2.6"
         timber_version = "4.7.1"
@@ -30,9 +31,8 @@ buildscript {
         junit_ext_version = "1.1.2"
         junit_version = "4.13.1"
 
-        // dev-byte-viewer
+
         version_retrofit_coroutines_adapter = "0.9.2"
-        version_kotlin_coroutines = "1.1.0"
     }
     repositories {
         google()
