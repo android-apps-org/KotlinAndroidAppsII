@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 
 import com.google.android.material.snackbar.Snackbar
 
@@ -24,18 +23,21 @@ class AddGdgFragment : Fragment() {
         val binding = AddGdgFragmentBinding.inflate(inflater)
 
         // Allows Data Binding to Observe LiveData with the lifecycle of this Fragment
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
         binding.viewModel = viewModel
 
-        viewModel.showSnackBarEvent.observe(viewLifecycleOwner, Observer {
-            if (it == true) { // Observed state is true.
+        viewModel.showSnackBarEvent.observe(viewLifecycleOwner, {
+            if (it == true) {
                 Snackbar.make(
                     requireActivity().findViewById(android.R.id.content),
                     getString(R.string.application_submitted),
-                    Snackbar.LENGTH_SHORT // How long to display the message.
+                    Snackbar.LENGTH_SHORT
                 ).show()
                 viewModel.doneShowingSnackbar()
+
+                binding.button.text = getText(R.string.done)
+                binding.button.contentDescription = getText(R.string.submitted)
             }
         })
 
