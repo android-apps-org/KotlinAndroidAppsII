@@ -5,11 +5,6 @@
     app:startDestination="@id/home">
 
     <fragment
-        android:id="@+id/gdg_search"
-        android:name="com.jdemaagd.gdgfinder.search.GdgListFragment"
-        android:label="GDG Search" />
-
-    <fragment
         android:id="@+id/home"
         android:name="com.jdemaagd.gdgfinder.home.HomeFragment"
         android:label="Home"
@@ -23,6 +18,12 @@
     </fragment>
 
     <fragment
+        android:id="@+id/gdg_search"
+        android:name="com.jdemaagd.gdgfinder.search.GdgListFragment"
+        android:label="GDG Search"
+        tools:layout="@layout/fragment_gdg_list" />
+
+    <fragment
         android:id="@+id/gdg_apply"
         android:name="com.jdemaagd.gdgfinder.add.AddGdgFragment"
         android:label="Apply"
@@ -30,12 +31,12 @@
 
     <!--<fragment-->
     <!--android:id="@+id/gdgDetailFragment"-->
-    <!--android:name="com.example.android.gdg.gdgdetail.GdgDetailFragment"-->
+    <!--android:name="com.jdemaagd.gdg.gdgdetail.GdgDetailFragment"-->
     <!--android:label="fragment_overview"-->
     <!--tools:layout="@layout/fragment_gdg_detail" >-->
     <!--<argument-->
     <!--android:name="selectedChapter"-->
-    <!--app:argType="com.example.android.gdg.network.GdgChapter"/>-->
+    <!--app:argType="com.jdemaagd.gdg.network.GdgChapter"/>-->
     <!--<action android:id="@+id/action_gdgDetailFragment_to_gdgListFragment" app:destination="@id/gdgListFragment"/>-->
     <!--</fragment>-->
 
